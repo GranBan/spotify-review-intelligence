@@ -9,7 +9,7 @@ st.set_page_config(layout="wide", page_title="Overview")
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv('data/spotify_reviews_final.csv')
+    df = pd.read_csv('data/spotify_reviews_light.csv')
     return df
 
 df = load_data()
