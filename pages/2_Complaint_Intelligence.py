@@ -8,7 +8,7 @@ st.set_page_config(layout="wide", page_title="Complaint Intelligence")
 
 @st.cache_data
 def load_data():
-    df_topics = pd.read_csv('data/spotify_topics_final.csv')
+    df_topics = pd.read_csv('data/spotify_topics_light.csv')
     return df_topics
 
 df_topics = load_data()
