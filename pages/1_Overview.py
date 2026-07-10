@@ -99,9 +99,10 @@ with col1:
         paper_bgcolor='#1e1e2e',
         font=dict(color='white'),
         xaxis=dict(title="Month", gridcolor='#333', color='white'),
-        yaxis=dict(title="Number of Reviews", gridcolor='#333', color='white'),
+        yaxis=dict(title="Number of Reviews", gridcolor='#333', color='white', range=[0, max(month_counts.values) * 1.15]),
         height=350
     )
+    
     st.plotly_chart(fig3, use_container_width=True)
 
 with col2:

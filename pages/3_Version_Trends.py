@@ -12,7 +12,7 @@ def load_data():
     version_topic_agg = pd.read_csv('data/spotify_version_topic_agg.csv')
     return version_sentiment, version_topic_agg
 
-version_sentiment, df_topics = load_data()
+version_sentiment, version_topic_agg = load_data()
 
 st.title("Version Trends")
 st.markdown("Negative sentiment rate tracked across 31 app versions with spike detection.")
@@ -109,10 +109,7 @@ selected_version = st.selectbox(
     version_sentiment['appVersion'].tolist()
 )
 
-df_version = df_topics[
-    (df_topics['appVersion'] == selected_version) &
-    (df_topics['topic_label'] != 'Noise')
-]
+df_version = version_topic_agg[version_topic_agg['appVersion'] == selected_version]
 
 if len(df_version) == 0:
     st.warning("No labeled topic data available for this version.")
@@ -121,7 +118,7 @@ else:
     
     total = version_sentiment[version_sentiment['appVersion'] == selected_version]['total_reviews'].values[0]
     neg_rate = version_sentiment[version_sentiment['appVersion'] == selected_version]['negative_rate'].values[0]
-    top_complaint = df_version['topic_label'].value_counts().index[0]
+    top_complaint = df_version.sort_values('count', ascending=False).iloc[0]['topic_label']
     
     with col1:
         st.metric("Total Reviews", f"{total:,}")
@@ -130,14 +127,14 @@ else:
     with col3:
         st.metric("Top Complaint", top_complaint)
 
-    topic_counts = df_version['topic_label'].value_counts().head(8).sort_values()
+    topic_counts = df_version.sort_values('count').tail(8)
     
     fig2 = go.Figure(go.Bar(
-        x=topic_counts.values,
-        y=topic_counts.index,
+        x=topic_counts['count'],
+        y=topic_counts['topic_label'],
         orientation='h',
         marker_color='#ff4444',
-        text=topic_counts.values,
+        text=topic_counts['count'],
         textposition='outside'
     ))
     
