@@ -9,8 +9,8 @@ st.set_page_config(layout="wide", page_title="Version Trends")
 @st.cache_data
 def load_data():
     version_sentiment = pd.read_csv('data/spotify_version_sentiment.csv')
-    df_topics = pd.read_csv('data/spotify_topics_light.csv')
-    return version_sentiment, df_topics
+    version_topic_agg = pd.read_csv('data/spotify_version_topic_agg.csv')
+    return version_sentiment, version_topic_agg
 
 version_sentiment, df_topics = load_data()
 
