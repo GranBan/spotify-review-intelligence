@@ -133,35 +133,10 @@ df_conf = load_confidence()
 st.markdown("---")
 st.markdown("### Model Confidence")
 
-col1, col2, col3 = st.columns(3)
-
-avg_conf = df_conf['confidence'].mean()
-high_conf_pct = (df_conf['confidence'] >= 0.9).mean() * 100
-low_conf_pct = (df_conf['confidence'] < 0.6).mean() * 100
-
-with col1:
-    st.metric("Average Confidence", f"{avg_conf:.1%}")
-with col2:
-    st.metric("High Confidence (≥90%)", f"{high_conf_pct:.1f}%")
-with col3:
-    st.metric("Low Confidence (<60%)", f"{low_conf_pct:.1f}%")
-
-fig_conf = px.histogram(
-    df_conf, x='confidence', color='predicted_sentiment',
-    nbins=50, color_discrete_map={'Negative': '#ff4444', 'Positive': '#1DB954'},
-    title="Prediction Confidence Distribution"
-)
-
-fig_conf.update_layout(
-    plot_bgcolor='#1e1e2e',
-    paper_bgcolor='#1e1e2e',
-    font=dict(color='white'),
-    xaxis=dict(title="Confidence", gridcolor='#333', color='white', range=[0.5, 1.0]),
-    yaxis=dict(title="Count (log scale)", gridcolor='#333', color='white', type='log'),
-    height=400,
-    barmode='overlay'
-)
-
-fig_conf.update_traces(opacity=0.7)
-
-st.plotly_chart(fig_conf, use_container_width=True)
+st.markdown("""
+<p style='color: #888; font-size: 0.95rem; margin-top: 1rem;'>
+The model is highly decisive: 90.5% of all predictions carry 90%+ confidence, and only 1% fall below 
+60% confidence. This indicates DistilBERT rarely hedges on sentiment classification for this dataset, 
+consistent with its 93.5% macro F1 on validation data.
+</p>
+""", unsafe_allow_html=True)
