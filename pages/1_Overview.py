@@ -156,9 +156,12 @@ fig_conf.update_layout(
     plot_bgcolor='#1e1e2e',
     paper_bgcolor='#1e1e2e',
     font=dict(color='white'),
-    xaxis=dict(title="Confidence", gridcolor='#333', color='white'),
-    yaxis=dict(title="Count", gridcolor='#333', color='white'),
-    height=400
+    xaxis=dict(title="Confidence", gridcolor='#333', color='white', range=[0.5, 1.0]),
+    yaxis=dict(title="Count (log scale)", gridcolor='#333', color='white', type='log'),
+    height=400,
+    barmode='overlay'
 )
+
+fig_conf.update_traces(opacity=0.7)
 
 st.plotly_chart(fig_conf, use_container_width=True)
