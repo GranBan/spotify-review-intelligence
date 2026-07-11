@@ -109,14 +109,55 @@ st.download_button(
 st.markdown("---")
 
 st.markdown("### Scoring Methodology")
+
 st.markdown("""
-Priority Score = (0.5 x Frequency Score) + (0.3 x Severity Score) + (0.2 x Trend Score)
+    <div style='background: #1e1e2e; border: 2px solid #1DB954; border-radius: 16px; 
+                padding: 2rem; text-align: center; margin: 1rem 0;'>
+        <p style='color: #888; font-size: 0.9rem; margin-bottom: 1rem;'>PRIORITY SCORE FORMULA</p>
+        <p style='color: white; font-size: 1.4rem; font-weight: 700; margin: 0;'>
+            Priority = <span style='color: #1DB954;'>0.5</span> × Frequency + 
+            <span style='color: #ff4444;'>0.3</span> × Severity + 
+            <span style='color: #ffcc00;'>0.2</span> × Trend
+        </p>
+    </div>
+""", unsafe_allow_html=True)
 
-- **Frequency Score:** Review count normalized by maximum topic count
-- **Severity Score:** (5 - avg star rating) / 4, so 1-star reviews score 1.0
-- **Trend Score:** Topic share in the 5 most recent app versions
+col1, col2, col3 = st.columns(3)
 
-Weights reflect product team priorities: widespread issues affect more users (frequency dominates), 
-severely unhappy users are at highest churn risk (severity second), 
-and recent issues need immediate attention (trend as tiebreaker).
-""")
+with col1:
+    st.markdown("""
+        <div style='background: #1e1e2e; border: 1px solid #1DB954; border-radius: 12px; padding: 1rem;'>
+            <p style='color: #1DB954; font-weight: 700; margin-bottom: 0.5rem;'>Frequency Score</p>
+            <p style='color: #888; font-size: 0.85rem; margin: 0;'>
+            = review_count / max(review_count)<br><br>
+            Normalized between 0 and 1. The most-reported issue scores 1.0.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+        <div style='background: #1e1e2e; border: 1px solid #ff4444; border-radius: 12px; padding: 1rem;'>
+            <p style='color: #ff4444; font-weight: 700; margin-bottom: 0.5rem;'>Severity Score</p>
+            <p style='color: #888; font-size: 0.85rem; margin: 0;'>
+            = (5 - avg_star_rating) / 4<br><br>
+            1-star average reviews score 1.0. 5-star average reviews score 0.0.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+        <div style='background: #1e1e2e; border: 1px solid #ffcc00; border-radius: 12px; padding: 1rem;'>
+            <p style='color: #ffcc00; font-weight: 700; margin-bottom: 0.5rem;'>Trend Score</p>
+            <p style='color: #888; font-size: 0.85rem; margin: 0;'>
+            = topic share in last 5 versions<br><br>
+            Higher score means the issue is still prominent in recent releases.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("""
+<p style='color: #888; font-size: 0.9rem; margin-top: 1.5rem;'>
+Weights reflect product priorities: widespread issues affect more users (frequency dominates at 50%), 
+severely unhappy users are at highest churn risk (severity at 30%), and recent issues need 
+immediate attention (trend as a 20% tiebreaker).
+</p>
+""", unsafe_allow_html=True)
