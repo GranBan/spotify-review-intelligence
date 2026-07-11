@@ -134,7 +134,7 @@ st.markdown("---")
 st.markdown("### Model Confidence")
 
 st.markdown("""
-<p style='color: #888; font-size: 0.95rem; margin-top: 1rem;'>
+<p style='color: #888; font-size: 1.1rem; margin-top: 1rem;'>
 The model is highly decisive: 90.5% of all predictions carry 90%+ confidence, and only 1% fall below 
 60% confidence. This indicates DistilBERT rarely hedges on sentiment classification for this dataset, 
 consistent with its 93.5% macro F1 on validation data.
