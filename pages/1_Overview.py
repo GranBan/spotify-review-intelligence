@@ -122,3 +122,43 @@ with col2:
         height=350
     )
     st.plotly_chart(fig4, use_container_width=True)
+
+@st.cache_data
+def load_confidence():
+    df_conf = pd.read_csv('data/spotify_confidence_light.csv')
+    return df_conf
+
+df_conf = load_confidence()
+
+st.markdown("---")
+st.markdown("### Model Confidence")
+
+col1, col2, col3 = st.columns(3)
+
+avg_conf = df_conf['confidence'].mean()
+high_conf_pct = (df_conf['confidence'] >= 0.9).mean() * 100
+low_conf_pct = (df_conf['confidence'] < 0.6).mean() * 100
+
+with col1:
+    st.metric("Average Confidence", f"{avg_conf:.1%}")
+with col2:
+    st.metric("High Confidence (≥90%)", f"{high_conf_pct:.1f}%")
+with col3:
+    st.metric("Low Confidence (<60%)", f"{low_conf_pct:.1f}%")
+
+fig_conf = px.histogram(
+    df_conf, x='confidence', color='predicted_sentiment',
+    nbins=50, color_discrete_map={'Negative': '#ff4444', 'Positive': '#1DB954'},
+    title="Prediction Confidence Distribution"
+)
+
+fig_conf.update_layout(
+    plot_bgcolor='#1e1e2e',
+    paper_bgcolor='#1e1e2e',
+    font=dict(color='white'),
+    xaxis=dict(title="Confidence", gridcolor='#333', color='white'),
+    yaxis=dict(title="Count", gridcolor='#333', color='white'),
+    height=400
+)
+
+st.plotly_chart(fig_conf, use_container_width=True)
