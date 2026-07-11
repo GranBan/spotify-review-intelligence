@@ -82,3 +82,31 @@ else:
                 <p style='color: #ccc; margin-top: 0.5rem;'>{row["content"]}</p>
             </div>
         """, unsafe_allow_html=True)
+
+st.markdown("---")
+st.markdown("### Search Reviews")
+st.markdown("Search for a keyword across all negative reviews.")
+
+search_term = st.text_input("Enter a keyword (e.g., 'shuffle', 'crash', 'ads')")
+
+if search_term:
+    matching_reviews = df_sample[
+        df_sample['content'].str.contains(search_term, case=False, na=False)
+    ]
+    
+    st.markdown(f"**{len(matching_reviews)} matching reviews found** (searched within sampled reviews)")
+    
+    if len(matching_reviews) > 0:
+        display_matches = matching_reviews.head(10)
+        for _, row in display_matches.iterrows():
+            st.markdown(f"""
+                <div style='background: #1e1e2e; border: 1px solid #333; border-radius: 8px; 
+                            padding: 1rem; margin-bottom: 0.5rem;'>
+                    <span style='color: #ffcc00;'>{"★" * int(row["score"])}{"☆" * (5 - int(row["score"]))}</span>
+                    <span style='color: #888; font-size: 0.8rem; margin-left: 1rem;'>
+                        {row["topic_label"]} · Version {row["appVersion"]}</span>
+                    <p style='color: #ccc; margin-top: 0.5rem;'>{row["content"]}</p>
+                </div>
+            """, unsafe_allow_html=True)
+    else:
+        st.info("No matches found. Try a different keyword.")
