@@ -22,7 +22,7 @@ steps = [
     ("Manual Topic Labeling", "Reviewed BERTopic's auto-generated keyword clusters and representative documents to assign clean, business-readable topic labels."),
     ("Temporal Trend Analysis", "Tracked negative sentiment rate across 31 app versions, identifying a 77% negative spike at version 9.1.46 linked to App Crashes and Bugs complaints."),
     ("Priority Matrix Construction", "Scored each complaint topic by frequency (50%), severity (30%), and recent trend (20%) to produce a ranked, actionable fix list."),
-    ("Streamlit Deployment", "Built a 6-page interactive dashboard deployed on Streamlit Community Cloud, with memory-optimized data loading for production stability."),
+    ("Streamlit Deployment", "Built a 7-page interactive dashboard deployed on Streamlit Community Cloud, with memory-optimized data loading for production stability."),
 ]
 
 for i, (step, desc) in enumerate(steps):
